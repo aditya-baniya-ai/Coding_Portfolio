@@ -32,15 +32,18 @@ export default function ContactPage() {
 
     // Simulate form submission
     try {
-      // In a real application, you would send the form data to your backend
+      // Simulate form submission delay
       await new Promise((resolve) => setTimeout(resolve, 1500))
+      
+      // Update success state
       setSubmitSuccess(true)
+    
+      // Reset form fields
       setFormData({ name: "", email: "", subject: "", message: "" })
-    } catch (error) {
-      setSubmitError("There was an error submitting your message. Please try again.")
     } finally {
       setIsSubmitting(false)
     }
+    
   }
 
   return (
@@ -57,7 +60,7 @@ export default function ContactPage() {
 
           {submitSuccess ? (
             <div className="bg-green-100 dark:bg-green-900/20 border border-green-300 dark:border-green-700 text-green-800 dark:text-green-300 p-4 rounded-lg mb-6">
-              Thank you for your message! I'll get back to you as soon as possible.
+              Thank you for your message! I will get back to you as soon as possible.
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">

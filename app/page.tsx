@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ArrowRight, Award, BookOpen, Briefcase } from "lucide-react"
+import { ArrowRight, BookOpen, Briefcase } from "lucide-react"
 
 export default function AboutPage() {
   return (
@@ -9,7 +9,7 @@ export default function AboutPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="order-2 md:order-1">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Hi, I'm <span className="text-primary">Aaditya Baniya</span>
+            Hi, I am <span className="text-primary">Aaditya Baniya</span>
           </h1>
           <h2 className="text-2xl md:text-3xl font-medium mb-6 text-muted-foreground">
             Full Stack Developer and AI Enthusiast
@@ -47,7 +47,7 @@ export default function AboutPage() {
             <BookOpen className="h-10 w-10 mb-4 text-primary" />
             <h3 className="text-xl font-bold mb-2">Certification</h3>
             <p className="text-muted-foreground">
-              Certified for Dean's List, Solving coding challenges, and Volunteering.
+              Certified for Dean List, Solving coding challenges, and Volunteering.
             </p>
           </div>
 

@@ -35,7 +35,7 @@ export default function ProjectsPage() {
     {
       title: "To-Do List",
       description:
-        "I built a <strong>To-Do List App</strong> using <strong>React, HTML, and plain CSS</strong>, providing a clean and intuitive task management experience. This project allows users to <strong>add tasks</strong>, ensuring a smooth workflow with a dynamic UI. Leveraging <strong>React's component-based architecture</strong>, the app efficiently updates for a seamless user experience. The styling, done with <strong>pure CSS</strong>, enhances the visual appeal while maintaining simplicity.",
+        "I built a <strong>To-Do List App</strong> using <strong>React, HTML, and plain CSS</strong>, providing a clean and intuitive task management experience. This project allows users to <strong>add tasks</strong>, ensuring a smooth workflow with a dynamic UI. Leveraging <strong>Reacts component-based architecture</strong>, the app efficiently updates for a seamless user experience. The styling, done with <strong>pure CSS</strong>, enhances the visual appeal while maintaining simplicity.",
       image: "/to_do_list.png",
       tags: ["React.js", "HTML", "Vanilla CSS", "Netlify"],
       liveLink: "https://adea.netlify.app/",
@@ -56,7 +56,7 @@ export default function ProjectsPage() {
     <div className="container-custom">
       <h1 className="section-heading">My Projects</h1>
       <p className="text-lg mb-12 max-w-3xl">
-        Here are some of the projects I've worked on. Each project represents different skills and technologies I've mastered.
+        Here are some of the projects I have worked on. Each project represents different skills and technologies I have mastered.
       </p>
 
       <div className="grid grid-cols-1 gap-16">

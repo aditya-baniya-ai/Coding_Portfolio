@@ -1,10 +1,9 @@
 import { 
-  Code, Database, Globe, Layout, Layers, Server, Smartphone, Terminal, 
-  GitBranch, Cloud, PenTool, Box, ServerCog
+  Code, Database, Globe, Layout, Layers, Server, Terminal, Cloud, Box
 } from "lucide-react"
 
 import { 
-  FaAws, FaDocker, FaGitAlt, FaNodeJs, FaReact, FaPython, FaHtml5, FaCss3, FaJs, FaDatabase, FaFlask, FaMobileAlt, FaGithub
+  FaDocker, FaReact, FaPython, FaHtml5, FaCss3, FaJs, FaDatabase, FaFlask, FaGithub
 } from "react-icons/fa"
 
 import { 
@@ -83,7 +82,7 @@ export default function SkillsPage() {
     <div className="container-custom">
       <h1 className="section-heading">My Skills</h1>
       <p className="text-lg mb-12 max-w-3xl">
-        I've developed a diverse set of skills throughout my career. Here's an overview of my technical expertise and
+        I have developed a diverse set of skills throughout my career. Here is an overview of my technical expertise and
         the technologies I work with.
       </p>
 
