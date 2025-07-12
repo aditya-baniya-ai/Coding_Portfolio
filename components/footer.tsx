@@ -13,7 +13,7 @@ export default function Footer() {
           </div>
           <div className="flex space-x-4">
             <Link
-              href="https://github.com/adityahacker-1"
+              href="https://github.com/aditya-baniya-ai"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
