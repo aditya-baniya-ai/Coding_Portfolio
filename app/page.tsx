@@ -75,8 +75,8 @@ const projects = [
       "Tackles manual data entry bottlenecks by implementing a Hybrid Computer Vision model to automate manufacturing time study sequences, providing instant feedback and eliminating human error. Winner of the Bobcat Innovation Challenge.",
     image: "/most_cv.png",
     tags: ["Computer Vision", "Machine Learning", "Automation", "Python"],
-    liveLink: "#",
-    githubLink: "#",
+    liveLink: "https://github.com/txst-digitaltwins/MOST",
+    githubLink: "https://github.com/txst-digitaltwins/MOST",
   },
   {
     title: "AI Smart — Autonomous DriveBot",
