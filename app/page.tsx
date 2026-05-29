@@ -58,6 +58,10 @@ import TypingAnimation from "@/components/typing-animation"
 import Timeline from "@/components/timeline"
 import Counter from "@/components/counter"
 import GradientCard from "@/components/gradient-card"
+import TiltCard from "@/components/tilt-card"
+import MagneticButton from "@/components/magnetic-button"
+import TechMarquee from "@/components/tech-marquee"
+import HeroProfile from "@/components/hero-profile"
 
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -408,14 +412,54 @@ export default function HomePage() {
               </motion.p>
 
               <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: {},
+                  visible: { transition: { staggerChildren: 0.04, delayChildren: 0.35 } },
+                }}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight"
                 style={{ fontFamily: "var(--font-space)" }}
               >
-                Hi, I&apos;m{" "}
-                <span className="gradient-text">Aaditya Baniya</span>
+                {"Hi, I'm ".split("").map((ch, i) => (
+                  <motion.span
+                    key={`p-${i}`}
+                    variants={{
+                      hidden: { opacity: 0, y: 24, rotateX: -45 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        rotateX: 0,
+                        transition: { type: "spring", stiffness: 320, damping: 22 },
+                      },
+                    }}
+                    className="inline-block"
+                    style={{ transformOrigin: "50% 100%" }}
+                  >
+                    {ch === " " ? " " : ch}
+                  </motion.span>
+                ))}
+                <span className="gradient-text">
+                  {"Aaditya Baniya".split("").map((ch, i) => (
+                    <motion.span
+                      key={`n-${i}`}
+                      variants={{
+                        hidden: { opacity: 0, y: 28, rotateX: -60, filter: "blur(8px)" },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          rotateX: 0,
+                          filter: "blur(0px)",
+                          transition: { type: "spring", stiffness: 280, damping: 20 },
+                        },
+                      }}
+                      className="inline-block"
+                      style={{ transformOrigin: "50% 100%" }}
+                    >
+                      {ch === " " ? " " : ch}
+                    </motion.span>
+                  ))}
+                </span>
               </motion.h1>
 
               <motion.div
@@ -456,46 +500,27 @@ export default function HomePage() {
                 transition={{ delay: 0.6 }}
                 className="flex flex-wrap gap-4"
               >
-                <button
+                <MagneticButton
                   onClick={() => {
                     document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })
                   }}
                   className="btn-gradient px-8 py-3 rounded-xl text-sm font-semibold flex items-center gap-2"
                 >
                   Get in Touch <ArrowRight className="h-4 w-4" />
-                </button>
-                <button
+                </MagneticButton>
+                <MagneticButton
                   onClick={() => {
                     document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" })
                   }}
                   className="btn-outline-gradient px-8 py-3 rounded-xl text-sm font-semibold"
                 >
                   View Projects
-                </button>
+                </MagneticButton>
               </motion.div>
             </motion.div>
 
             {/* Profile Image */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="order-1 lg:order-2 flex justify-center"
-            >
-              <div className="relative">
-                {/* Glowing ring behind image */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 blur-2xl opacity-30 animate-pulse-glow scale-110" />
-                <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-cyan-500/30 animate-float">
-                  <Image
-                    src="/aditya.jpeg"
-                    alt="Aaditya Baniya"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-              </div>
-            </motion.div>
+            <HeroProfile />
           </div>
 
           {/* Stats bar */}
@@ -575,6 +600,10 @@ export default function HomePage() {
               </AnimatedSection>
             ))}
           </div>
+
+          <AnimatedSection delay={0.2} className="mt-16">
+            <TechMarquee />
+          </AnimatedSection>
         </div>
       </section>
 
@@ -596,6 +625,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((project, index) => (
               <AnimatedSection key={index} delay={index * 0.15}>
+                <TiltCard className="h-full rounded-xl">
                 <motion.div
                   whileHover={{ y: -8 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -649,6 +679,7 @@ export default function HomePage() {
                     </div>
                   </div>
                 </motion.div>
+                </TiltCard>
               </AnimatedSection>
             ))}
           </div>
@@ -721,10 +752,15 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {achievements.map((achievement, index) => (
               <AnimatedSection key={index} delay={index * 0.1}>
+                <TiltCard
+                  className="h-full rounded-xl"
+                  maxTilt={6}
+                  spotlightColor="rgba(168,85,247,0.18)"
+                >
                 <motion.div
                   whileHover={{ y: -5, scale: 1.03 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="glass rounded-xl p-6 border border-border/30 hover:border-cyan-500/30 transition-all duration-300 group"
+                  className="glass rounded-xl p-6 border border-border/30 hover:border-cyan-500/30 transition-all duration-300 group h-full"
                 >
                   <div
                     className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${achievement.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}
@@ -738,6 +774,7 @@ export default function HomePage() {
                     {achievement.description}
                   </p>
                 </motion.div>
+                </TiltCard>
               </AnimatedSection>
             ))}
           </div>

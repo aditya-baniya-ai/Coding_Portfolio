@@ -4,6 +4,8 @@ import { Inter, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import ScrollProgress from "@/components/scroll-progress"
+import GrainOverlay from "@/components/grain-overlay"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" })
@@ -41,6 +43,8 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${inter.variable} ${spaceGrotesk.variable} font-sans bg-background text-foreground min-h-screen flex flex-col antialiased`}
       >
+        <ScrollProgress />
+        <GrainOverlay />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
