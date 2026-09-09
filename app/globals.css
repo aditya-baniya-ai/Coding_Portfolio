@@ -2861,3 +2861,197 @@ html[data-theme="dark"] .button-dark:hover {
   transform: scale(1.5);
   transform-origin: 50% 100%;
 }
+
+/* The portfolio starts with the person behind the work. */
+.about-opening {
+  padding: 66px 0 68px;
+  grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+  grid-template-areas: "photo intro" "photo bio" "background background";
+  column-gap: 80px;
+  row-gap: 0;
+}
+.about-intro {
+  grid-area: intro;
+}
+.about-intro > .eyebrow {
+  color: var(--muted);
+  margin-bottom: 27px;
+}
+.personal-greeting {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+.about-intro h1 {
+  font-size: clamp(3.2rem, 4.8vw, 4.65rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.065em;
+  margin: 0 0 18px;
+}
+.personal-role {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--blue);
+}
+.about-opening .about-photo {
+  grid-area: photo;
+  margin-top: 0;
+}
+.about-opening .about-photo img {
+  height: 510px;
+}
+.about-opening .about-copy {
+  grid-area: bio;
+  padding-top: 24px;
+}
+.about-opening .hero-actions {
+  margin-top: 25px;
+}
+.about-opening .hero-location {
+  margin-top: 22px;
+  font-size: 0.75rem;
+}
+.about-background {
+  grid-area: background;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin-top: 45px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+.about-background .education {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.about-background .leadership {
+  margin: 0;
+  gap: 2px;
+}
+.about-background .leadership .eyebrow {
+  font-size: 0.7rem;
+}
+.about-background .education-tags {
+  font-size: 0.72rem;
+}
+.about-background .community-note {
+  margin-top: 0;
+}
+.toolkit-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  align-items: center;
+  gap: 48px;
+  margin-bottom: 30px;
+}
+.toolkit-heading .eyebrow {
+  margin-bottom: 22px;
+}
+.toolkit-intro {
+  margin-top: 22px;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.toolkit-orbit {
+  min-width: 0;
+}
+.toolkit-orbit .orbit-wrap {
+  height: 310px;
+  margin: 0;
+}
+.toolkit-orbit .orbit-mount {
+  inset: 12px 0 28px;
+}
+.toolkit-orbit .orbit-grid {
+  width: 220px;
+  height: 220px;
+  top: 40px;
+}
+.toolkit-orbit .scene-coordinate {
+  left: 8px;
+  right: 8px;
+}
+.toolkit-orbit .scene-pill {
+  display: none;
+}
+
+@media (max-width: 1150px) {
+  .about-opening {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.25fr);
+    column-gap: 40px;
+  }
+  .about-opening .about-photo img {
+    height: 530px;
+  }
+  .about-background {
+    gap: 40px;
+  }
+  .toolkit-heading {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+    gap: 28px;
+  }
+}
+@media (max-width: 760px) {
+  .about-opening {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "intro" "photo" "bio" "background";
+    padding: 40px 0 50px;
+    gap: 0;
+  }
+  .about-intro > .eyebrow {
+    margin-bottom: 22px;
+  }
+  .about-intro h1 {
+    font-size: clamp(2.85rem, 8.2vw, 4.25rem);
+  }
+  .personal-greeting {
+    font-size: 1.1rem;
+  }
+  .personal-role {
+    font-size: 0.875rem;
+  }
+  .about-opening .about-photo {
+    margin-top: 28px;
+    width: 100%;
+    max-width: none;
+  }
+  .about-opening .about-photo img {
+    height: 370px;
+  }
+  .about-opening .about-copy {
+    padding-top: 28px;
+  }
+  .about-background {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 32px;
+  }
+  .toolkit-heading {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+  .toolkit-orbit {
+    width: 100%;
+    max-width: 420px;
+    justify-self: center;
+  }
+  .toolkit-orbit .orbit-wrap {
+    height: 280px;
+  }
+  .toolkit-orbit .orbit-grid {
+    width: 200px;
+    height: 200px;
+    top: 35px;
+  }
+}
+@media print {
+  .toolkit-heading {
+    grid-template-columns: 1fr;
+  }
+  .toolkit-orbit {
+    display: none;
+  }
+}

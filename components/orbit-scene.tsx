@@ -200,7 +200,7 @@ export default function OrbitScene() {
   return (
     <div className="orbit-wrap">
       <div className="scene-coordinate coordinate-top" aria-hidden="true">
-        <span>01 / INFINITE CURIOSITY</span>
+        <span>04 / INFINITE CURIOSITY</span>
         <span>✳</span>
       </div>
       <div className="orbit-grid" aria-hidden="true" />

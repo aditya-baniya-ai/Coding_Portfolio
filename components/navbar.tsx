@@ -3,9 +3,9 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
 const links = [
+  ["About", "about"],
   ["Work", "projects"],
   ["Experience", "experience"],
-  ["About", "about"],
   ["Contact", "contact"],
 ];
 export default function Navbar() {

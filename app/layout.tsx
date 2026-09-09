@@ -17,11 +17,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://adityabaniya.netlify.app"),
   title: "Aaditya Baniya — Software Engineer & Computer Vision Researcher",
   description:
-    "Software engineering meets real-world AI. Explore Aaditya Baniya’s edge computer vision research, full-stack applications, robotics, and work at Texas State University.",
+    "Meet Aaditya Baniya, a Computer Science student at Texas State University. Explore his software engineering projects, computer vision research, experience, and interests.",
   openGraph: {
     title: "Aaditya Baniya — Software + AI",
     description:
-      "Intelligent systems. Real-world impact. Software engineering, edge AI, and computer vision.",
+      "Aaditya Baniya’s portfolio: software engineering, computer vision research, and life as a Computer Science student at Texas State University.",
     url: "https://adityabaniya.netlify.app",
     type: "website",
   },

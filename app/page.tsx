@@ -248,80 +248,104 @@ export default function Home() {
   };
   return (
     <>
-      <section id="top" className="hero section-shell">
-        <div className="hero-copy">
-          <p className="eyebrow hero-eyebrow">
-            <span className="little-star">✳</span> SOFTWARE ENGINEERING ×
-            COMPUTER VISION
+      <div id="top" />
+      <section id="about" className="section-shell about-section about-opening">
+        <div className="about-intro">
+          <p className="eyebrow">
+            <span>01</span> ABOUT ME
           </p>
+          <p className="personal-greeting">Hi, I’m</p>
           <h1>
-            Intelligent
-            <br />
-            systems.
-            <br />
-            <span className="hero-last">
-              Real-world <em>impact.</em>
-            </span>
+            Aaditya Baniya<span className="blue-dot">.</span>
           </h1>
-          <p className="hero-intro">
-            I’m <strong>Aaditya</strong>, a software engineer and computer
-            vision researcher turning ambitious ideas into systems that work
-            beyond the demo.
+          <p className="personal-role">
+            Software engineer & computer vision researcher
+          </p>
+        </div>
+        <div className="about-photo">
+          <Image
+            src="/aditya.jpeg"
+            alt="Aaditya Baniya"
+            width={600}
+            height={700}
+            sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1150px) 38vw, 420px"
+            preload
+          />
+          <span className="photo-caption">
+            AADITYA RAJ BANIYA <span>↗</span>
+          </span>
+        </div>
+        <div className="about-copy">
+          <p>
+            I’m a Computer Science student at Texas State University, working at
+            the intersection of software engineering, machine learning, and
+            computer vision.
+          </p>
+          <p>
+            My work spans factory safety, industrial time studies, creative AI
+            tools, and robotics. I like the whole process: understanding a
+            problem, building the system, and seeing it work in someone’s hands.
           </p>
           <div className="hero-actions">
             <a className="button button-dark" href="#projects">
-              Explore my work <ArrowDown size={18} />
+              View my projects <ArrowDown size={18} />
             </a>
             <a className="text-link" href="#contact">
-              Let’s connect <ArrowUpRight size={18} />
+              Get in touch <ArrowUpRight size={18} />
             </a>
           </div>
           <div className="hero-location">
             <MapPin size={14} />
             <span>San Marcos, Texas</span>
-            <span className="small-divider" />
-            <span>Texas State University</span>
           </div>
         </div>
-        <OrbitScene />
-        <div className="hero-bottom">
-          <span>RESEARCH MINDSET. BUILDER’S INSTINCT.</span>
-          <a href="#projects">
-            SCROLL TO EXPLORE <ArrowDown size={14} />
-          </a>
+        <div className="about-background">
+          <h2 className="sr-only">Education & community</h2>
+          <div className="education">
+            <div className="education-icon">
+              <Code2 size={23} />
+            </div>
+            <div>
+              <h3>Texas State University</h3>
+              <p>B.S. Computer Science · Expected May 2027</p>
+              <div className="education-tags">
+                <span>3.8 GPA</span>
+                <span>Honors Scholar</span>
+                <span>President’s List</span>
+              </div>
+            </div>
+          </div>
+          <div className="about-community">
+            <div className="leadership">
+              <div>
+                <span className="eyebrow">LEADING & CONNECTING</span>
+                <p>
+                  President · Data Analytics Association
+                  <br />
+                  Secretary · Google Developer Group TXST
+                </p>
+              </div>
+              <a
+                className="text-link"
+                href="https://www.linkedin.com/in/aadityabaniya/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                More about me <ArrowUpRight size={17} />
+              </a>
+            </div>
+            <p className="community-note">
+              Also part of .EXE, ACM AI, SIAM Math Club, IEEE, and CODE PATH
+              ORG.
+            </p>
+          </div>
         </div>
       </section>
-      <div className="proof-strip section-shell">
-        <div>
-          <strong>
-            25–30<span>ms</span>
-          </strong>
-          <p>Edge inference · Makerspace Sentinel</p>
-        </div>
-        <div>
-          <strong>
-            18,000<span>+</span>
-          </strong>
-          <p>Unseen validation images · Sentinel</p>
-        </div>
-        <div>
-          <strong>$13,000</strong>
-          <p>Grants, fellowships & prizes</p>
-        </div>
-        <div className="proof-note">
-          <span className="little-star">✳</span>
-          <p>
-            From the research lab
-            <br />
-            to the real world.
-          </p>
-        </div>
-      </div>
       <section id="projects" className="section-shell work-section">
         <div className="section-top">
           <div>
             <p className="eyebrow">
-              <span>01</span> THE WORK
+              <span>02</span> THE WORK
             </p>
             <h2>
               Ideas, made real<span className="blue-dot">.</span>
@@ -443,12 +467,38 @@ export default function Home() {
           </div>
         )}
       </section>
+      <div className="proof-strip section-shell">
+        <div>
+          <strong>
+            25–30<span>ms</span>
+          </strong>
+          <p>Edge inference · Makerspace Sentinel</p>
+        </div>
+        <div>
+          <strong>
+            18,000<span>+</span>
+          </strong>
+          <p>Unseen validation images · Sentinel</p>
+        </div>
+        <div>
+          <strong>$13,000</strong>
+          <p>Grants, fellowships & prizes</p>
+        </div>
+        <div className="proof-note">
+          <span className="little-star">✳</span>
+          <p>
+            From the research lab
+            <br />
+            to the real world.
+          </p>
+        </div>
+      </div>
       <section id="experience" className="experience-section">
         <div className="section-shell">
           <div className="section-top">
             <div>
               <p className="eyebrow">
-                <span>02</span> EXPERIENCE
+                <span>03</span> EXPERIENCE
               </p>
               <h2>
                 Learning by building.
@@ -495,88 +545,22 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section id="about" className="section-shell about-section">
-        <div className="about-photo">
-          <Image
-            src="/aditya.jpeg"
-            alt="Aaditya Baniya"
-            width={600}
-            height={700}
-            sizes="(max-width: 720px) 100vw, 35vw"
-          />
-          <span className="photo-caption">
-            AADITYA RAJ BANIYA <span>↗</span>
-          </span>
-        </div>
-        <div className="about-copy">
-          <p className="eyebrow">
-            <span>03</span> THE PERSON BEHIND THE PROJECTS
-          </p>
-          <h2>
-            Curiosity is
-            <br />
-            the through line<span className="blue-dot">.</span>
-          </h2>
-          <p>
-            I’m a Computer Science student at Texas State University, working at
-            the intersection of software engineering, machine learning, and
-            computer vision.
-          </p>
-          <p>
-            My work spans factory safety, industrial time studies, creative AI
-            tools, and robotics. I like the whole process: understanding a
-            problem, building the system, and seeing it work in someone’s hands.
-          </p>
-          <div className="education">
-            <div className="education-icon">
-              <Code2 size={23} />
-            </div>
-            <div>
-              <h3>Texas State University</h3>
-              <p>B.S. Computer Science · Expected May 2027</p>
-              <div className="education-tags">
-                <span>3.8 GPA</span>
-                <span>Honors Scholar</span>
-                <span>President’s List</span>
-              </div>
-            </div>
-          </div>
-          <div className="leadership">
-            <div>
-              <span className="eyebrow">LEADING & CONNECTING</span>
-              <p>
-                President · Data Analytics Association
-                <br />
-                Secretary · Google Developer Group TXST
-              </p>
-            </div>
-            <a
-              className="text-link"
-              href="https://www.linkedin.com/in/aadityabaniya/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              More about me <ArrowUpRight size={17} />
-            </a>
-          </div>
-          <p className="community-note">
-            Also part of .EXE, ACM AI, SIAM Math Club, IEEE, and CODE PATH ORG.
-          </p>
-        </div>
-      </section>
       <section id="skills" className="section-shell skills-section">
-        <div className="section-top">
+        <div className="toolkit-heading">
           <div>
             <p className="eyebrow">
               <span>04</span> THE TOOLKIT
             </p>
             <h2>A full-system perspective.</h2>
+            <p className="toolkit-intro">
+              The right tools for the problem.
+              <br />
+              From a model to the interface around it.
+            </p>
           </div>
-          <p>
-            The right tools for the problem.
-            <br />
-            From a model to the interface around it.
-          </p>
+          <div className="toolkit-orbit">
+            <OrbitScene />
+          </div>
         </div>
         <div className="skills-grid">
           {skills.map((s) => (
