@@ -1,54 +1,58 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter, Space_Grotesk } from "next/font/google"
-import "./globals.css"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import ScrollProgress from "@/components/scroll-progress"
-import GrainOverlay from "@/components/grain-overlay"
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" })
-
+import Link from "next/link";
+import type { Metadata } from "next";
+import { Inter, Space_Grotesk } from "next/font/google";
+import Navbar from "@/components/navbar";
+import "./globals.css";
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+const space = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space",
+  display: "swap",
+});
 export const metadata: Metadata = {
-  title: "Aaditya Baniya | Full Stack Developer & AI Engineer",
+  metadataBase: new URL("https://adityabaniya.netlify.app"),
+  title: "Aaditya Baniya — Software Engineer & Computer Vision Researcher",
   description:
-    "Portfolio of Aaditya Baniya — Full Stack Developer, AI Researcher, and Computer Vision Engineer specializing in building intelligent web applications.",
-  keywords: [
-    "Aaditya Baniya",
-    "Full Stack Developer",
-    "AI Engineer",
-    "Computer Vision",
-    "React",
-    "Next.js",
-    "Python",
-    "Machine Learning",
-  ],
+    "Software engineering meets real-world AI. Explore Aaditya Baniya’s edge computer vision research, full-stack applications, robotics, and work at Texas State University.",
   openGraph: {
-    title: "Aaditya Baniya | Full Stack Developer & AI Engineer",
+    title: "Aaditya Baniya — Software + AI",
     description:
-      "Building intelligent web applications at the intersection of full-stack development and AI.",
+      "Intelligent systems. Real-world impact. Software engineering, edge AI, and computer vision.",
+    url: "https://adityabaniya.netlify.app",
     type: "website",
   },
-}
-
+  robots: { index: true, follow: true },
+};
+const themeScript = `try{var t=localStorage.getItem('portfolio-theme');if(t==='dark')document.documentElement.dataset.theme='dark'}catch(e){}`;
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
-      <body
-        suppressHydrationWarning
-        className={`${inter.variable} ${spaceGrotesk.variable} font-sans bg-background text-foreground min-h-screen flex flex-col antialiased`}
-      >
-        <ScrollProgress />
-        <GrainOverlay />
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className={`${inter.variable} ${space.variable}`}>
+        <Link className="skip-link" href="#main">
+          Skip to content
+        </Link>
         <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <main id="main">{children}</main>
+        <footer className="site-footer">
+          <Link className="footer-name" href="/#top">
+            Aaditya Baniya<span>↗</span>
+          </Link>
+          <p>Made with curiosity. Built with purpose.</p>
+          <span>© {new Date().getFullYear()} Aaditya Baniya</span>
+          <Link href="/#top">Back to top ↑</Link>
+        </footer>
       </body>
     </html>
-  )
+  );
 }

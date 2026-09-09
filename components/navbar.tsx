@@ -1,184 +1,101 @@
-"use client"
-
-
-import { useState, useEffect } from "react"
-import { Menu, X, Moon, Sun } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
-
-const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Hackathons", href: "#hackathons" },
-  { name: "Experience", href: "#experience" },
-  { name: "Achievements", href: "#achievements" },
-  { name: "Contact", href: "#contact" },
-]
-
+"use client";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
+const links = [
+  ["Work", "projects"],
+  ["Experience", "experience"],
+  ["About", "about"],
+  ["Contact", "contact"],
+];
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(true)
-  const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("about")
-
+  const [open, setOpen] = useState(false);
+  const menuToggle = useRef<HTMLButtonElement>(null);
+  const [dark, setDark] = useState(false);
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-
-      // Scroll spy
-      const sections = navLinks.map((link) => link.href.replace("#", ""))
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i])
-        if (section) {
-          const rect = section.getBoundingClientRect()
-          if (rect.top <= 120) {
-            setActiveSection(sections[i])
-            break
-          }
-        }
-      }
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
+    setDark(document.documentElement.dataset.theme === "dark");
+  }, []);
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const isDark =
-        localStorage.getItem("darkMode") !== "false"
-      setIsDarkMode(isDark)
-      if (isDark) {
-        document.documentElement.classList.add("dark")
-      } else {
-        document.documentElement.classList.remove("dark")
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && open) {
+        setOpen(false);
+        menuToggle.current?.focus();
       }
-    }
-  }, [])
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode)
-    if (typeof window !== "undefined") {
-      localStorage.setItem("darkMode", (!isDarkMode).toString())
-      document.documentElement.classList.toggle("dark")
-    }
-  }
-
-  const handleNavClick = (href: string) => {
-    setIsMenuOpen(false)
-    const element = document.querySelector(href)
-    if (element) {
-      const offsetTop = element.getBoundingClientRect().top + window.scrollY - 80
-      window.scrollTo({ top: offsetTop, behavior: "smooth" })
-    }
-  }
-
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, [open]);
+  const theme = () => {
+    const next = !dark;
+    setDark(next);
+    document.documentElement.dataset.theme = next ? "dark" : "light";
+    try {
+      localStorage.setItem("portfolio-theme", next ? "dark" : "light");
+    } catch {}
+  };
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ type: "spring", stiffness: 100, damping: 20 }}
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        scrolled
-          ? "glass-strong shadow-lg shadow-black/10"
-          : "bg-transparent"
-      }`}
-    >
-      {/* Gradient bottom border on scroll */}
-      {scrolled && (
-        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
-      )}
-
-      <div className="container flex h-16 items-center justify-between">
-        <button
-          onClick={() => handleNavClick("#about")}
-          className="font-bold text-xl gradient-text hover:opacity-80 transition-opacity"
-          style={{ fontFamily: "var(--font-space)" }}
+    <header className="site-header">
+      <div className="nav-shell">
+        <Link
+          href="/#top"
+          className="wordmark"
+          aria-label="Aaditya Baniya, home"
         >
-          {"<Aaditya />"}
-        </button>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => handleNavClick(link.href)}
-              className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                activeSection === link.href.replace("#", "")
-                  ? "text-cyan-400"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {activeSection === link.href.replace("#", "") && (
-                <motion.div
-                  layoutId="activeSection"
-                  className="absolute inset-0 bg-cyan-500/10 rounded-lg border border-cyan-500/20"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              <span className="relative z-10">{link.name}</span>
-            </button>
+          <span className="brand-mark">
+            a<span>.</span>
+          </span>
+          <span>
+            Aaditya Baniya<span className="wordmark-sub">SOFTWARE + AI</span>
+          </span>
+        </Link>
+        <nav className="desktop-nav" aria-label="Main navigation">
+          {links.map(([label, id]) => (
+            <Link key={id} href={`/#${id}`}>
+              {label}
+            </Link>
           ))}
-          <button
-            onClick={toggleDarkMode}
-            className="ml-2 p-2 rounded-lg hover:bg-muted/50 transition-colors"
-            aria-label="Toggle dark mode"
-          >
-            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
         </nav>
-
-        {/* Mobile Navigation Toggle */}
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="nav-actions">
           <button
-            onClick={toggleDarkMode}
-            className="p-2 rounded-lg hover:bg-muted/50 transition-colors"
-            aria-label="Toggle dark mode"
+            className="icon-button"
+            onClick={theme}
+            aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
           >
-            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+            {dark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
+          <Link className="nav-resume" href="/#resumes">
+            Résumé <ArrowUpRight size={16} />
+          </Link>
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 rounded-lg hover:bg-muted/50 transition-colors"
-            aria-label="Toggle menu"
+            ref={menuToggle}
+            className="icon-button menu-button"
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+            onClick={() => setOpen(!open)}
           >
-            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            {open ? <X /> : <Menu />}
           </button>
         </div>
       </div>
-
-      {/* Mobile Navigation Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden glass-strong border-t border-border/30 overflow-hidden"
-          >
-            <div className="container py-4 flex flex-col space-y-1">
-              {navLinks.map((link, index) => (
-                <motion.button
-                  key={link.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  onClick={() => handleNavClick(link.href)}
-                  className={`py-3 px-4 text-left rounded-lg transition-all duration-300 ${
-                    activeSection === link.href.replace("#", "")
-                      ? "text-cyan-400 bg-cyan-500/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
-                  }`}
-                >
-                  {link.name}
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
-  )
+      {open && (
+        <nav
+          id="mobile-navigation"
+          className="mobile-nav"
+          aria-label="Mobile navigation"
+        >
+          {links.map(([label, id]) => (
+            <Link key={id} href={`/#${id}`} onClick={() => setOpen(false)}>
+              {label}
+              <ArrowUpRight size={18} />
+            </Link>
+          ))}
+          <Link href="/#resumes" onClick={() => setOpen(false)}>
+            Résumés
+            <ArrowUpRight size={18} />
+          </Link>
+        </nav>
+      )}
+    </header>
+  );
 }

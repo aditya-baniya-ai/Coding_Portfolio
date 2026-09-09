@@ -1,38 +1,40 @@
-# https://adityabaniya.netlify.app/
+# Aaditya Baniya — Software + AI
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Live portfolio: https://adityabaniya.netlify.app/
 
-## Getting Started
+Next.js, React, TypeScript, and Three.js portfolio with a responsive light/dark design, an interactive 3D focal element, project filtering and search, accessible native case-study dialogs, and two resume PDFs.
 
-First, run the development server:
+## Development
 
-```bash
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Validation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run lint
+npm test
+npm run build
+npm audit
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The test suite covers email-draft encoding and header boundaries, case-study completeness/link invariants, and the grants/prizes total. The responsive interface, keyboard interactions, themes, project filters, contact validation, and downloads also receive browser verification.
 
-## Learn More
+## Content
 
-To learn more about Next.js, take a look at the following resources:
+- `lib/portfolio.ts`: projects, experience, skills, and recognition. Preserve each numerical claim's context when editing.
+- `public/resumes/`: supplied Software Engineering and AI / Computer Vision resumes.
+- `lib/contact.ts`: mailto draft construction. The form opens the visitor's email client; it does not deliver messages from a server or report a false send success. Direct email, clipboard copy, and telephone links are available.
+- No public repository is claimed for Makerspace Sentinel, MOSTify, or the job-search automation workflow. Removed legacy Seremo and Drum Kit demo actions were unreachable; their repository links remain available.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Motion and accessibility
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The Three.js scene is loaded dynamically. It caps pixel density, renders at approximately 30 FPS, suspends work offscreen/in hidden tabs, respects `prefers-reduced-motion`, and has an explicit pause control. Paused and reduced-motion scenes render still frames; a text fallback appears if WebGL cannot initialize. CSS disables transition and smooth scrolling for reduced motion.
 
-## Deploy on Vercel
+Navigation and dialogs support keyboards and focus restoration. Search labels, input labels, live result announcements, and a skip link are included.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The existing Netlify site `adityabaniya` is connected to this repository's `main` branch. Its build command is `npm run build` and publish directory is `.next`; Netlify supplies its Next.js runtime integration. Push validated changes to `main` to trigger the existing deployment. Do not create a substitute site or commit account credentials.
