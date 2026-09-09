@@ -35,10 +35,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
       <body className={`${inter.variable} ${space.variable}`}>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Link className="skip-link" href="#main">
           Skip to content
         </Link>
