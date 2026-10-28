@@ -1,9 +1,10 @@
 import { autoChess } from "./case-studies/auto-chess";
 import { biotwin } from "./case-studies/biotwin";
+import { drivebot } from "./case-studies/drivebot";
 import { ingather } from "./case-studies/ingather";
 import { mytwin } from "./case-studies/mytwin";
 import { robo } from "./case-studies/robo";
-import type { Project } from "./project-types";
+import type { MediaItem, Project } from "./project-types";
 
 export type {
   Bullet,
@@ -89,31 +90,6 @@ const existing: Project[] = [
     ],
     outcome:
       "Reduced 3–5 days of manual analysis to 1–2 hours of semi-automated work. Supported by a $5,000 BIAP II grant; earlier MOST work won the Bobcat Innovation Challenge.",
-  },
-  {
-    id: "robot",
-    title: "Autonomous DriveBot",
-    category: "Robotics",
-    hackathon: true,
-    eyebrow: "ROBOTICS / REAL-TIME SYSTEMS",
-    featured: true,
-    color: "purple",
-    did: "Built a Raspberry Pi surveillance robot with autonomous navigation, live video and two-way voice.",
-    how: "LiveKit and WebRTC for real-time streaming to a Next.js console, OpenCV ArUco markers for indoor navigation, and the OpenAI API for voice.",
-    summary:
-      "A Raspberry Pi surveillance robot with autonomous navigation, live video, and two-way voice.",
-    tags: ["LiveKit", "WebRTC", "OpenCV", "Next.js"],
-    image: "/ai_smart.png",
-    period: "Jan 2026",
-    context: "January 2026 · NexHacks at Carnegie Mellon University",
-    approach: [
-      "Built a LiveKit-powered Raspberry Pi robot and a Next.js operator console for real-time home surveillance over WebRTC.",
-      "Integrated OpenCV ArUco marker detection for autonomous indoor navigation.",
-      "Added two-way voice through the OpenAI API alongside live camera streaming and remote control.",
-    ],
-    outcome:
-      "Connected robotics, computer vision, and a web interface in one real-time system.",
-    github: "https://github.com/aditya-baniya-ai/robotic_car",
   },
   {
     id: "tflash",
@@ -257,7 +233,7 @@ const existing: Project[] = [
   },
 ];
 
-const all: Project[] = [ingather, mytwin, biotwin, robo, autoChess, ...existing];
+const all: Project[] = [ingather, mytwin, biotwin, robo, autoChess, drivebot, ...existing];
 
 /**
  * Display order: the strongest and newest work first. The first project is
@@ -291,3 +267,18 @@ export function getNeighbours(id: string) {
 }
 
 export const hasCaseStudy = (p: Project) => Boolean(p.sections?.length);
+
+/**
+ * Media in display order: the cover image first (the first image listed),
+ * then any videos, then the remaining images. A video is never first.
+ */
+export function orderedMedia(p: Project): MediaItem[] {
+  const media = p.media ?? [];
+  const cover = media.find((m) => m.type === "image");
+  if (!cover) return media;
+  return [
+    cover,
+    ...media.filter((m) => m.type !== "image"),
+    ...media.filter((m) => m.type === "image" && m !== cover),
+  ];
+}

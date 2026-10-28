@@ -11,6 +11,7 @@ import { contactEmail } from "@/lib/contact";
 import {
   getNeighbours,
   getProject,
+  orderedMedia,
   projects,
   type MediaItem,
   type Section,
@@ -58,9 +59,9 @@ export default async function ProjectPage({
   const p = getProject(slug);
   if (!p) notFound();
 
-  const media: MediaItem[] =
-    p.media ??
-    (p.image
+  const media: MediaItem[] = p.media
+    ? orderedMedia(p)
+    : (p.image
       ? [{ type: "image", src: p.image, alt: `${p.title} project screenshot` }]
       : []);
   const videos = media.filter((m) => m.type !== "image");
@@ -127,6 +128,16 @@ export default async function ProjectPage({
         </div>
       )}
 
+      {images.length > 0 && (
+        <section className="section-shell case-media" aria-labelledby="gallery">
+          <p className="eyebrow">GALLERY · {images.length} {images.length === 1 ? "IMAGE" : "IMAGES"}</p>
+          <h2 id="gallery" className="sr-only">
+            Image gallery
+          </h2>
+          <Gallery images={images} title={p.title} />
+        </section>
+      )}
+
       {videos.length > 0 && (
         <section className="section-shell case-media" aria-labelledby="watch">
           <p className="eyebrow">WATCH</p>
@@ -142,16 +153,6 @@ export default async function ProjectPage({
               ) : null,
             )}
           </div>
-        </section>
-      )}
-
-      {images.length > 0 && (
-        <section className="section-shell case-media" aria-labelledby="gallery">
-          <p className="eyebrow">GALLERY · {images.length} {images.length === 1 ? "IMAGE" : "IMAGES"}</p>
-          <h2 id="gallery" className="sr-only">
-            Image gallery
-          </h2>
-          <Gallery images={images} title={p.title} />
         </section>
       )}
 

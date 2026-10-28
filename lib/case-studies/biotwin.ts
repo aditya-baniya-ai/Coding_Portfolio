@@ -39,6 +39,12 @@ export const biotwin: Project = {
     { value: "PWA", label: "installable, with desktop and mobile layouts" },
   ],
   media: [
+    {
+      type: "image",
+      src: "/projects/biotwin/cover.jpg",
+      alt: "BioTwin overview: an animated digital twin avatar with voice input, the headline “Beyond Numbers”, and a Body Battery reading",
+      caption: "The BioTwin overview: your digital twin, ready to talk",
+    },
     { type: "youtube", id: "NDVqUmvhcm8", title: "bioTwin | Hack Rice 16 demo video" },
     { type: "youtube", id: "T8H4S3MSeT4", title: "BioTwin demo walkthrough" },
     ...devpostImages("BioTwin", [

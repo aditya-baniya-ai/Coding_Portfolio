@@ -3,32 +3,6 @@ import type { Project } from "@/lib/projects";
 
 /** Illustrated artwork for projects without photos or screenshots. */
 export default function ProjectArt({ project }: { project: Project }) {
-  if (project.art === "chess")
-    return (
-      <div
-        className="chess-art"
-        role="img"
-        aria-label="A chessboard with a robot arm lowering over it to move a piece from e2 to e4"
-      >
-        <div className="chess-board" aria-hidden="true">
-          {Array.from({ length: 64 }, (_, i) => (
-            <i key={i} className={(i + Math.floor(i / 8)) % 2 ? "dark" : ""} />
-          ))}
-          <b className="chess-piece p1">♞</b>
-          <b className="chess-piece p2">♜</b>
-          <b className="chess-piece p3">♟</b>
-          <b className="chess-piece p4">♚</b>
-          <b className="chess-piece p5">♙</b>
-          <b className="chess-piece p6">♕</b>
-        </div>
-        <div className="chess-arm" aria-hidden="true">
-          <span />
-        </div>
-        <p className="chess-move" aria-hidden="true">
-          <span>STOCKFISH</span> e2 → e4 <span>ARM</span>
-        </p>
-      </div>
-    );
   if (project.id === "sentinel")
     return (
       <div

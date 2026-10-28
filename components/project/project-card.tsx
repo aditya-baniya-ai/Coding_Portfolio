@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Github, PlayCircle } from "lucide-react";
-import type { Project } from "@/lib/projects";
+import { orderedMedia, type Project } from "@/lib/projects";
 import MediaCarousel from "./media-carousel";
 import ProjectArt from "./project-art";
 
@@ -17,7 +17,7 @@ export default function ProjectCard({ project: p, index }: Props) {
       <div className="project-frame">
         {p.media?.length ? (
           <div className="project-art-button media-frame">
-            <MediaCarousel items={p.media} label={p.title} href={href} />
+            <MediaCarousel items={orderedMedia(p)} label={p.title} href={href} />
           </div>
         ) : (
           <Link
@@ -91,7 +91,7 @@ export default function ProjectCard({ project: p, index }: Props) {
               <PlayCircle size={15} aria-hidden="true" />
               {videos > 0 && `${videos} video${videos > 1 ? "s" : ""}`}
               {videos > 0 && photos > 0 && " · "}
-              {photos > 0 && `${photos} photos`}
+              {photos > 0 && `${photos} photo${photos > 1 ? "s" : ""}`}
             </span>
           )}
         </div>
