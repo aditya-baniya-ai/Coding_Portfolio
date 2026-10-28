@@ -29,7 +29,6 @@ export type Project = {
   eyebrow: string;
   summary: string;
   tags: string[];
-  featured?: boolean;
   color: string;
   image?: string;
   metric?: string;

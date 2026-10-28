@@ -1365,10 +1365,11 @@ html[data-theme="dark"] .card-purple {
   --on-accent: #1d1638;
 }
 
-/* ───────── Project tiles: colour-coded folder tabs ───────── */
+/* ───────── Project tiles: colour-coded folder tabs, one per row ───────── */
 .project-grid {
-  gap: 30px 28px;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 34px;
 }
 .project-tile {
   position: relative;
@@ -1386,6 +1387,7 @@ html[data-theme="dark"] .card-purple {
   padding: 0 24px;
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   border-radius: 16px 16px 0 0;
   background: var(--accent);
   color: var(--on-accent);
@@ -1397,7 +1399,11 @@ html[data-theme="dark"] .card-purple {
 .project-tile .project-card {
   min-width: 0;
   flex: 1;
-  padding: 16px 16px 26px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  column-gap: 40px;
+  align-items: center;
+  padding: 20px 28px 24px 20px;
   border: 3px solid var(--accent);
   border-radius: 0 26px 26px 26px;
   background: color-mix(in srgb, var(--tint) 62%, var(--surface));
@@ -1410,17 +1416,20 @@ html[data-theme="dark"] .card-purple {
   transform: translateY(-4px);
 }
 .project-tile .project-frame {
-  --frame-h: 300px;
+  --frame-h: 440px;
 }
 .project-tile .project-art-button {
-  border-radius: 14px;
+  border-radius: 16px;
   box-shadow: none;
 }
 .project-tile .project-card:hover .project-art-button {
   transform: none;
 }
 .project-tile .project-meta {
-  padding: 22px 8px 0;
+  padding: 0;
+}
+.project-tile .project-meta h3 {
+  font-size: 2.1rem;
 }
 .project-tile .project-meta .eyebrow {
   color: var(--tint-ink);
@@ -1433,43 +1442,192 @@ html[data-theme="dark"] .card-purple {
   background: color-mix(in srgb, var(--surface) 70%, transparent);
   border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
 }
-.project-tile-wide {
-  grid-column: 1 / -1;
+.project-actions {
+  margin-top: 0;
 }
-.project-tile-wide .project-card {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  column-gap: 40px;
+
+/* Owner-only pin button (visible with ?pin on the address). */
+.pin-toggle {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 4px;
+  display: inline-flex;
   align-items: center;
-  padding: 20px 24px 24px 20px;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font: 600 0.8rem var(--font-inter);
+  box-shadow: 0 4px 16px #0003;
 }
-.project-tile-wide .project-frame {
-  --frame-h: 460px;
+.pin-toggle:hover {
+  background: var(--lime);
+  color: #20231f;
 }
-.project-tile-wide .project-meta {
-  padding-top: 0;
+.pin-toggle.is-pinned {
+  background: var(--ink);
+  color: var(--paper);
 }
-.project-tile-wide h3 {
-  font-size: 2.1rem;
+.owner-bar {
+  position: fixed;
+  z-index: 60;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  max-width: calc(100% - 24px);
+  padding: 12px 18px;
+  border-radius: 18px;
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 12px 40px #0006;
+  font-size: 0.84rem;
 }
+.owner-bar button {
+  padding: 8px 14px;
+  border: 1px solid color-mix(in srgb, var(--paper) 40%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--paper);
+  font-weight: 600;
+}
+.owner-bar button:hover {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: #20231f;
+}
+.owner-bar p {
+  flex-basis: 100%;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--lime);
+}
+
+/* Divider shown once the extra projects are revealed. */
+.more-divider {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 18px 0 2px;
+  font: 600 0.72rem var(--font-inter);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.more-divider::before,
+.more-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* The "Show more projects" call to action. */
+.show-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 56px;
+  padding-top: 44px;
+  border-top: 1px solid var(--line);
+}
+.show-more-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  width: min(100%, 640px);
+  padding: 22px 30px 22px 22px;
+  border: 3px solid var(--ink);
+  border-radius: 22px;
+  background: var(--lime);
+  color: #20231f;
+  text-align: left;
+  box-shadow: 8px 8px 0 var(--ink);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.show-more-button:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 11px 11px 0 var(--ink);
+}
+.show-more-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.show-more-count {
+  flex: 0 0 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #20231f;
+  color: var(--lime);
+  font: 500 1.9rem var(--font-space);
+}
+.show-more-label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font: 600 1.45rem var(--font-space);
+  letter-spacing: -0.03em;
+}
+.show-more-label small {
+  font: 500 0.85rem var(--font-inter);
+  letter-spacing: 0;
+  opacity: 0.8;
+}
+.show-more-button > svg {
+  flex-shrink: 0;
+  animation: nudge 2s ease-in-out infinite;
+}
+@keyframes nudge {
+  50% {
+    transform: translateY(4px);
+  }
+}
+html[data-theme="dark"] .show-more-button {
+  border-color: var(--lime);
+  box-shadow: 8px 8px 0 var(--lime);
+}
+html[data-theme="dark"] .show-more-button:hover {
+  box-shadow: 11px 11px 0 var(--lime);
+}
+html[data-theme="dark"] .show-more-button:active {
+  box-shadow: 4px 4px 0 var(--lime);
+}
+
 @media (max-width: 1150px) {
-  .project-tile-wide .project-card {
+  .proof-strip {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 26px;
+  }
+  .proof-strip > div:nth-child(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .project-tile .project-card {
     grid-template-columns: 1fr;
     row-gap: 26px;
     padding: 16px 16px 26px;
   }
-  .project-tile-wide .project-frame {
+  .project-tile .project-frame {
     --frame-h: 400px;
   }
-  .project-tile-wide .project-meta {
-    padding-top: 6px;
+  .project-tile .project-meta {
+    padding: 0 6px;
   }
 }
 @media (max-width: 850px) {
   .project-tile .project-frame {
-    --frame-h: 270px;
-  }
-  .project-tile-wide .project-frame {
     --frame-h: 340px;
   }
 }
@@ -1485,24 +1643,45 @@ html[data-theme="dark"] .card-purple {
   .project-tile {
     padding-top: 36px;
   }
-  .project-tile .project-card,
-  .project-tile-wide .project-card {
+  .project-tile .project-card {
     padding: 10px 10px 22px;
     border-radius: 0 22px 22px 22px;
   }
-  .project-tile .project-frame,
-  .project-tile-wide .project-frame {
-    --frame-h: 240px;
+  .project-tile .project-frame {
+    --frame-h: 250px;
   }
-  .project-tile .project-meta {
-    padding: 18px 6px 0;
-  }
-  .project-tile-wide h3 {
+  .project-tile .project-meta h3 {
     font-size: 1.6rem;
+  }
+  .pin-toggle {
+    top: 0;
+    right: 0;
+    padding: 7px 12px;
+    font-size: 0.72rem;
+  }
+  .show-more-button {
+    gap: 14px;
+    padding: 16px 16px 16px 14px;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  .show-more-count {
+    flex-basis: 48px;
+    height: 48px;
+    font-size: 1.4rem;
+  }
+  .show-more-label {
+    font-size: 1.15rem;
+  }
+  .show-more-label small {
+    font-size: 0.74rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .project-tile .project-card {
+  .project-tile .project-card,
+  .show-more-button {
     transition: none;
+  }
+  .show-more-button > svg {
+    animation: none;
   }
 }

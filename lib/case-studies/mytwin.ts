@@ -5,7 +5,6 @@ export const mytwin: Project = {
   title: "myTwin",
   category: "Full stack",
   hackathon: true,
-  featured: true,
   color: "lime",
   eyebrow: "REVENUECAT SHIPATON 2026 / IOS + HEALTH AI",
   summary:

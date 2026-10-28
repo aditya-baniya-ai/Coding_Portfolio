@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowDownToLine,
-  ArrowRight,
   ArrowUpRight,
   Check,
   Code2,
@@ -13,6 +12,10 @@ import {
   Linkedin,
   Mail,
   MapPin,
+  ChevronDown,
+  ChevronUp,
+  Pin,
+  PinOff,
   Search,
 } from "lucide-react";
 import Link from "next/link";
@@ -24,6 +27,7 @@ import {
   hackathons,
   skills,
 } from "@/lib/portfolio";
+import { pinned as defaultPins } from "@/lib/pinned";
 import { projects } from "@/lib/projects";
 
 import { buildEmailDraft, contactEmail as email } from "@/lib/contact";
@@ -49,17 +53,59 @@ export default function Home() {
     },
     [],
   );
-  const visible = projects.filter(
-    (p) =>
-      (query.trim() ||
-        filter === "All work" ||
-        (filter === "Selected" && p.featured) ||
-        filter === p.category ||
-        (filter === "Hackathons" && p.hackathon)) &&
-      `${p.title} ${p.summary} ${p.tags.join(" ")}`
-        .toLowerCase()
-        .includes(query.trim().toLowerCase()),
-  );
+  const [pins, setPins] = useState<string[]>(defaultPins);
+  const [owner, setOwner] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [pinNote, setPinNote] = useState("");
+  // Pin mode is for the site owner only: add `?pin` to the address.
+  useEffect(() => {
+    if (!new URLSearchParams(window.location.search).has("pin")) return;
+    setOwner(true);
+    try {
+      const saved = JSON.parse(localStorage.getItem("portfolio-pins") ?? "null");
+      if (Array.isArray(saved))
+        setPins(saved.filter((id) => projects.some((p) => p.id === id)));
+    } catch {}
+  }, []);
+  const togglePin = (id: string) => {
+    const next = pins.includes(id) ? pins.filter((x) => x !== id) : [...pins, id];
+    setPins(next);
+    setPinNote("");
+    try {
+      localStorage.setItem("portfolio-pins", JSON.stringify(next));
+    } catch {}
+  };
+  const copyPins = async () => {
+    const text = `export const pinned: string[] = [\n${pins.map((id) => `  "${id}",`).join("\n")}\n];\n`;
+    try {
+      await navigator.clipboard.writeText(text);
+      setPinNote("Copied. Paste it into lib/pinned.ts, or send it to Claude.");
+    } catch {
+      setPinNote(`Pinned: ${pins.join(", ")}`);
+    }
+  };
+  const rank = (id: string) => {
+    const i = pins.indexOf(id);
+    return i === -1 ? 1000 + projects.findIndex((p) => p.id === id) : i;
+  };
+  const matches = projects
+    .filter(
+      (p) =>
+        (query.trim() ||
+          filter === "All work" ||
+          (filter === "Selected" && pins.includes(p.id)) ||
+          filter === p.category ||
+          (filter === "Hackathons" && p.hackathon)) &&
+        `${p.title} ${p.summary} ${p.tags.join(" ")}`
+          .toLowerCase()
+          .includes(query.trim().toLowerCase()),
+    )
+    .sort((a, b) => rank(a.id) - rank(b.id));
+  const collapsible = filter === "Selected" && !query.trim();
+  const extra = collapsible
+    ? projects.filter((p) => !pins.includes(p.id)).sort((a, b) => rank(a.id) - rank(b.id))
+    : [];
+  const visible = collapsible && expanded ? [...matches, ...extra] : matches;
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(email);
@@ -251,24 +297,43 @@ export default function Home() {
           {visible.length} {visible.length === 1 ? "project" : "projects"}
           {query
             ? ` matching “${query}”`
-            : filter === "Selected"
-              ? " selected"
+            : filter === "Selected" && !expanded
+              ? " pinned"
               : ""}
         </p>
         <div className="project-grid">
-          {visible.map((p, i) => (
-            <div
-              key={p.id}
-              className={`project-tile card-${p.color}${
-                i === 0 && !query && (filter === "Selected" || filter === "All work")
-                  ? " project-tile-wide"
-                  : ""
-              }`}
-            >
-              <span className="project-tab">{p.period ?? p.category}</span>
-              <ProjectCard project={p} index={i} />
-            </div>
-          ))}
+          {visible.map((p, i) => {
+            const isPinned = pins.includes(p.id);
+            return (
+              <Fragment key={p.id}>
+                {collapsible && expanded && i === matches.length && (
+                  <div className="more-divider" role="separator">
+                    <span>More projects</span>
+                  </div>
+                )}
+                <div className={`project-tile card-${p.color}`}>
+                  <span className="project-tab">
+                    {isPinned && filter !== "Selected" && (
+                      <Pin size={13} aria-label="Pinned" />
+                    )}
+                    {p.period ?? p.category}
+                  </span>
+                  {owner && (
+                    <button
+                      type="button"
+                      className={`pin-toggle${isPinned ? " is-pinned" : ""}`}
+                      onClick={() => togglePin(p.id)}
+                      aria-pressed={isPinned}
+                    >
+                      {isPinned ? <PinOff size={15} /> : <Pin size={15} />}
+                      {isPinned ? "Unpin" : "Pin to main screen"}
+                    </button>
+                  )}
+                  <ProjectCard project={p} index={i} />
+                </div>
+              </Fragment>
+            );
+          })}
         </div>
         {!visible.length && (
           <div className="empty-state">
@@ -286,17 +351,56 @@ export default function Home() {
             </button>
           </div>
         )}
-        {filter === "Selected" && !query && (
-          <div className="more-work">
-            <p>There’s more in the workshop.</p>
+        {collapsible && extra.length > 0 && (
+          <div className="show-more">
             <button
-              className="text-link"
+              type="button"
+              className="show-more-button"
+              aria-expanded={expanded}
+              onClick={() => setExpanded((e) => !e)}
+            >
+              <span className="show-more-count">{extra.length}</span>
+              <span className="show-more-label">
+                {expanded ? "Show fewer projects" : "Show more projects"}
+                <small>
+                  {expanded
+                    ? "Back to the pinned ones"
+                    : "More hackathon builds, robotics and experiments"}
+                </small>
+              </span>
+              {expanded ? <ChevronUp size={26} /> : <ChevronDown size={26} />}
+            </button>
+          </div>
+        )}
+        {owner && (
+          <div className="owner-bar" role="region" aria-label="Pin mode">
+            <strong>Pin mode</strong>
+            <span>{pins.length} pinned</span>
+            <button type="button" onClick={copyPins}>
+              Copy list
+            </button>
+            <button
+              type="button"
               onClick={() => {
-                setFilter("All work");
+                setPins(defaultPins);
+                setPinNote("");
+                try {
+                  localStorage.removeItem("portfolio-pins");
+                } catch {}
               }}
             >
-              Explore all {projects.length} projects <ArrowRight size={18} />
+              Reset
             </button>
+            <button
+              type="button"
+              onClick={() => {
+                setOwner(false);
+                window.history.replaceState(null, "", window.location.pathname + "#projects");
+              }}
+            >
+              Exit
+            </button>
+            {pinNote && <p role="status">{pinNote}</p>}
           </div>
         )}
       </section>

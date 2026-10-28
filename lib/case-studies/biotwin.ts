@@ -12,7 +12,6 @@ export const biotwin: Project = {
   title: "BioTwin",
   category: "AI & vision",
   hackathon: true,
-  featured: true,
   color: "purple",
   eyebrow: "HACKRICE 16 / HEALTH AI",
   summary:

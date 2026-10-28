@@ -20,6 +20,7 @@ const loadTS = async (path) =>
   import(await toDataUrl(new URL(path, import.meta.url)));
 const { buildEmailDraft, contactEmail } = await loadTS("../lib/contact.ts");
 const { awards, hackathons } = await loadTS("../lib/portfolio.ts");
+const { pinned } = await loadTS("../lib/pinned.ts");
 const { projects, orderedMedia } = await loadTS("../lib/projects.ts");
 
 test("email draft preserves message text and keeps special characters within its fields", () => {
@@ -98,6 +99,12 @@ test("a project never opens on a video: its cover is an image", () => {
     assert.equal(first.type, "image", `${project.id} must open on an image`);
     assert.equal(rest.length + 1, project.media.length, "nothing is dropped");
   }
+});
+test("pinned projects exist, are unique, and leave some behind the button", () => {
+  assert.equal(new Set(pinned).size, pinned.length);
+  for (const id of pinned)
+    assert.ok(projects.some((p) => p.id === id), `${id} is not a project`);
+  assert.ok(pinned.length >= 1 && pinned.length < projects.length);
 });
 test("hackathon strip links to real projects", () => {
   for (const h of hackathons)

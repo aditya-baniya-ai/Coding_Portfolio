@@ -6,7 +6,6 @@ export const robo: Project = {
   id: "robo",
   title: "Robo, the Makerspace Greeter",
   category: "Robotics",
-  featured: true,
   color: "blue",
   eyebrow: "ROBOTICS / EMBODIED AI",
   summary:
