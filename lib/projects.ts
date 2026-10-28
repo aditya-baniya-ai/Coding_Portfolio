@@ -20,7 +20,6 @@ const existing: Project[] = [
     title: "Makerspace Sentinel",
     category: "AI & vision",
     eyebrow: "EDGE AI / INDUSTRIAL SAFETY",
-    featured: true,
     color: "blue",
     did: "Built real-time PPE detection and put it into daily use at Texas State’s Ingram School of Engineering, with 25–30 ms inference.",
     how: "A CBAM-enhanced YOLOv8 model fine-tuned on three PPE classes, validated on 18,000+ unseen images, optimized with TensorRT and deployed on a Jetson AGX Orin.",
@@ -46,7 +45,6 @@ const existing: Project[] = [
     category: "Full stack",
     hackathon: true,
     eyebrow: "GENERATIVE AI / CREATIVE TOOLS",
-    featured: true,
     color: "coral",
     did: "Turned real-estate photos into beat-synced cinematic reels and won first prize for Best Use of the FAL API.",
     how: "A 10-layer agentic pipeline: GPT-4o Vision classifies rooms, agents plan shot order and generate Kling clips, and FFmpeg assembles them to the beat.",
@@ -70,7 +68,6 @@ const existing: Project[] = [
     title: "MOSTify",
     category: "AI & vision",
     eyebrow: "COMPUTER VISION / PRODUCT ENGINEERING",
-    featured: true,
     color: "lime",
     did: "Cut industrial time studies from 3–5 days of manual analysis to 1–2 hours of semi-automated work.",
     how: "Human action recognition over manufacturing footage, with a pipeline I led from dataset collection through training, optimization and deployment.",
@@ -236,8 +233,8 @@ const existing: Project[] = [
 const all: Project[] = [ingather, mytwin, biotwin, robo, autoChess, drivebot, ...existing];
 
 /**
- * Display order: the strongest and newest work first. The first project is
- * shown as the wide spotlight card. Anything not listed follows in file order.
+ * Default order of the full list. Which projects appear on the main screen is
+ * decided separately, in lib/pinned.ts.
  */
 const order = [
   "ingather",

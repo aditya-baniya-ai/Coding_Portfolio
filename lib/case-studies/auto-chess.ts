@@ -4,7 +4,6 @@ export const autoChess: Project = {
   id: "auto-chess",
   title: "Auto-chess",
   category: "Robotics",
-  featured: true,
   color: "blue",
   eyebrow: "ROBOTICS / GAME AI",
   summary:

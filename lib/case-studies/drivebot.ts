@@ -7,7 +7,6 @@ export const drivebot: Project = {
   title: "Autonomous DriveBot",
   category: "Robotics",
   hackathon: true,
-  featured: true,
   color: "purple",
   eyebrow: "ROBOTICS / REAL-TIME SYSTEMS",
   summary:

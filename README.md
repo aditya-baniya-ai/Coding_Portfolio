@@ -30,6 +30,10 @@ The test suite covers email-draft encoding and header boundaries, case-study com
 - `lib/contact.ts`: mailto draft construction. The form opens the visitor's email client; it does not deliver messages from a server or report a false send success. Direct email, clipboard copy, and telephone links are available.
 - No public repository is claimed for Makerspace Sentinel, MOSTify, or the job-search automation workflow. Removed legacy Seremo and Drum Kit demo actions were unreachable; their repository links remain available.
 
+## Choosing which projects are on the main screen
+
+`lib/pinned.ts` lists the projects shown on the main screen, in order; everything else is behind the "Show more projects" button. To change it without editing code by hand: open the site with `?pin` on the end of the address (e.g. `https://adityabaniya.netlify.app/?pin`), pin or unpin projects (your choices are previewed in your own browser only), press **Copy list**, and paste the result into `lib/pinned.ts`. Visitors never see pin mode.
+
 ## Adding or editing a project
 
 Open `lib/projects.ts` (short projects) or copy one of `lib/case-studies/*.ts` (full case studies) and fill in the fields in `lib/project-types.ts`:

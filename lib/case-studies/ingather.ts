@@ -5,7 +5,6 @@ export const ingather: Project = {
   title: "InGather",
   category: "Full stack",
   hackathon: true,
-  featured: true,
   color: "coral",
   eyebrow: "HACKTX 2026 / SOCIAL AI",
   summary:
