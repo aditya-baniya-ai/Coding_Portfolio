@@ -14,196 +14,32 @@ import {
   Mail,
   MapPin,
   Search,
-  X,
 } from "lucide-react";
+import Link from "next/link";
 import OrbitScene from "@/components/orbit-scene";
+import ProjectCard from "@/components/project/project-card";
 import {
   awards,
   experiences,
-  projects,
+  hackathons,
   skills,
-  type Project,
 } from "@/lib/portfolio";
+import { projects } from "@/lib/projects";
 
 import { buildEmailDraft, contactEmail as email } from "@/lib/contact";
 const filters = [
   "Selected",
   "All work",
   "AI & vision",
+  "Robotics",
   "Full stack",
+  "Hackathons",
   "Experiments",
 ] as const;
-
-function ProjectArt({ project }: { project: Project }) {
-  if (project.id === "sentinel")
-    return (
-      <div
-        className="pipeline-art"
-        aria-label="PPE detection pipeline: camera input, YOLOv8 with CBAM, TensorRT edge inference"
-      >
-        <div className="scan-field">
-          <div className="scan-cross cross-one" />
-          <div className="scan-cross cross-two" />
-          <div className="scan-box">
-            <span>PPE DETECTION</span>
-            <div className="scan-points">
-              {Array.from({ length: 24 }, (_, i) => (
-                <i key={i} />
-              ))}
-            </div>
-            <b>VISION → ACTION</b>
-          </div>
-        </div>
-        <div className="pipeline-steps">
-          <span>CAPTURE</span>
-          <i>→</i>
-          <span>YOLOv8 + CBAM</span>
-          <i>→</i>
-          <span>TENSORRT</span>
-        </div>
-      </div>
-    );
-  if (project.id === "reelstudio")
-    return (
-      <div
-        className="reel-art"
-        aria-label="ReelStudio pipeline: photos, vision agents, cinematic reels"
-      >
-        <div className="reel-word">
-          reel<span>studio</span>
-          <sup>↗</sup>
-        </div>
-        <div className="reel-timeline">
-          {[
-            34, 48, 72, 46, 89, 63, 42, 79, 100, 62, 39, 78, 49, 91, 57, 37, 68,
-            46, 82, 54, 34, 73, 96, 63, 45, 82, 55, 69, 42, 87,
-          ].map((h, i) => (
-            <i key={i} style={{ height: `${h}%` }} />
-          ))}
-        </div>
-        <div className="reel-caption">
-          <span>PHOTOS → AGENTS → FILM</span>
-          <span>ON THE BEAT.</span>
-        </div>
-      </div>
-    );
-  return (
-    <div className="project-image">
-      <Image
-        src={project.image!}
-        alt={`${project.title} project screenshot`}
-        fill
-        sizes="(max-width: 720px) 100vw, 50vw"
-      />
-    </div>
-  );
-}
-
-function ProjectDialog({
-  project,
-  onClose,
-}: {
-  project: Project | null;
-  onClose: () => void;
-}) {
-  const dialog = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    const opener = document.activeElement as HTMLElement | null;
-    const modal = dialog.current;
-    const previousOverflow = document.body.style.overflow;
-    if (project) {
-      modal?.showModal();
-      document.body.style.overflow = "hidden";
-    }
-    return () => {
-      modal?.close();
-      document.body.style.overflow = previousOverflow;
-      opener?.focus({ preventScroll: true });
-    };
-  }, [project]);
-  return (
-    <dialog
-      ref={dialog}
-      className="project-dialog"
-      aria-labelledby="project-dialog-title"
-      onCancel={onClose}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      {project && (
-        <div className="dialog-content">
-          <button
-            className="dialog-close icon-button"
-            aria-label="Close project details"
-            onClick={onClose}
-            autoFocus
-          >
-            <X />
-          </button>
-          <span className={`eyebrow accent-${project.color}`}>
-            {project.eyebrow}
-          </span>
-          <h2 id="project-dialog-title">{project.title}</h2>
-          <p className="dialog-context">{project.context}</p>
-          <p className="dialog-summary">{project.summary}</p>
-          <div className="tag-row">
-            {project.tags.map((t) => (
-              <span key={t}>{t}</span>
-            ))}
-          </div>
-          <h3>The engineering</h3>
-          <ul>
-            {project.approach.map((a) => (
-              <li key={a}>{a}</li>
-            ))}
-          </ul>
-          <div className={`outcome outcome-${project.color}`}>
-            <span className="eyebrow">THE OUTCOME</span>
-            <p>{project.outcome}</p>
-          </div>
-          <div className="dialog-links">
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noreferrer"
-                className="button button-dark"
-              >
-                <Github size={17} /> View source <ArrowUpRight size={17} />
-              </a>
-            )}
-            {project.demo && (
-              <a
-                href={project.demo}
-                target="_blank"
-                rel="noreferrer"
-                className="button button-outline"
-              >
-                Live project <ArrowUpRight size={17} />
-              </a>
-            )}
-            {!project.github && !project.demo && (
-              <p>
-                Interested in the technical details?{" "}
-                <a
-                  href={`mailto:${email}?subject=${encodeURIComponent(`Let’s talk about ${project.title}`)}`}
-                >
-                  Let’s talk <ArrowUpRight size={14} />
-                </a>
-              </p>
-            )}
-          </div>
-        </div>
-      )}
-    </dialog>
-  );
-}
 
 export default function Home() {
   const [filter, setFilter] = useState<string>("Selected");
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState<Project | null>(null);
   const [copyState, setCopyState] = useState("");
   const [draftState, setDraftState] = useState("");
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -218,7 +54,8 @@ export default function Home() {
       (query.trim() ||
         filter === "All work" ||
         (filter === "Selected" && p.featured) ||
-        filter === p.category) &&
+        filter === p.category ||
+        (filter === "Hackathons" && p.hackathon)) &&
       `${p.title} ${p.summary} ${p.tags.join(" ")}`
         .toLowerCase()
         .includes(query.trim().toLowerCase()),
@@ -282,10 +119,19 @@ export default function Home() {
             computer vision.
           </p>
           <p>
-            My work spans factory safety, industrial time studies, creative AI
-            tools, and robotics. I like the whole process: understanding a
-            problem, building the system, and seeing it work in someone’s hands.
+            My work spans factory safety, industrial time studies, wearable
+            health AI, creative tools, and robotics. I like the whole process:
+            understanding a problem, building the system, and seeing it work in
+            someone’s hands.
           </p>
+          <Link className="latest-build" href={`/projects/${projects[0].id}`}>
+            <span className="latest-dot" aria-hidden="true" />
+            <span>
+              <small>LATEST BUILD</small>
+              {projects[0].title} · {projects[0].context.split(" · ")[0]}
+            </span>
+            <ArrowUpRight size={17} />
+          </Link>
           <div className="hero-actions">
             <a className="button button-dark" href="#projects">
               View my projects <ArrowDown size={18} />
@@ -297,6 +143,18 @@ export default function Home() {
           <div className="hero-location">
             <MapPin size={14} />
             <span>San Marcos, Texas</span>
+            <span className="small-divider" />
+            <a href="https://github.com/aditya-baniya-ai" target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+            <span className="small-divider" />
+            <a href="https://devpost.com/adityahacker-1" target="_blank" rel="noreferrer">
+              Devpost
+            </a>
+            <span className="small-divider" />
+            <a href="https://www.linkedin.com/in/aadityabaniya/" target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
           </div>
         </div>
         <div className="about-background">
@@ -352,9 +210,9 @@ export default function Home() {
             </h2>
           </div>
           <p>
-            Vision at the edge. Intelligence in the browser.
-            <br className="desktop-break" /> A few things I’ve put into the
-            world.
+            Vision at the edge. Robots that talk back. Health data you can
+            <br className="desktop-break" /> have a conversation with. Open any
+            project for the full story.
           </p>
         </div>
         <div className="work-toolbar">
@@ -399,42 +257,12 @@ export default function Home() {
         </p>
         <div className="project-grid">
           {visible.map((p, i) => (
-            <article className={`project-card card-${p.color}`} key={p.id}>
-              <button
-                className="project-art-button"
-                onClick={() => setSelected(p)}
-                aria-label={`Read ${p.title} project details`}
-              >
-                <ProjectArt project={p} />
-                <span className="project-open">
-                  <ArrowUpRight size={22} />
-                </span>
-                {p.metric && (
-                  <span className="metric-badge">
-                    <strong>{p.metric}</strong>
-                    <span>{p.metricLabel}</span>
-                  </span>
-                )}
-              </button>
-              <div className="project-meta">
-                <p className="eyebrow">
-                  {p.eyebrow}
-                  <span>{String(i + 1).padStart(2, "0")}</span>
-                </p>
-                <h3>
-                  <button onClick={() => setSelected(p)}>
-                    {p.title}
-                    <ArrowUpRight size={23} />
-                  </button>
-                </h3>
-                <p className="project-summary">{p.summary}</p>
-                <div className="tag-row">
-                  {p.tags.map((t) => (
-                    <span key={t}>{t}</span>
-                  ))}
-                </div>
-              </div>
-            </article>
+            <ProjectCard
+              key={p.id}
+              project={p}
+              index={i}
+              wide={i === 0 && !query && (filter === "Selected" || filter === "All work")}
+            />
           ))}
         </div>
         {!visible.length && (
@@ -484,13 +312,9 @@ export default function Home() {
           <strong>$13,000</strong>
           <p>Grants, fellowships & prizes</p>
         </div>
-        <div className="proof-note">
-          <span className="little-star">✳</span>
-          <p>
-            From the research lab
-            <br />
-            to the real world.
-          </p>
+        <div>
+          <strong>{hackathons.length}</strong>
+          <p>Hackathons built at, newest first below</p>
         </div>
       </div>
       <section id="experience" className="experience-section">
@@ -616,17 +440,14 @@ export default function Home() {
       </section>
       <section id="hackathons" className="section-shell hackathon-section">
         <p className="eyebrow">BUILT IN GOOD COMPANY</p>
-        <div className="hackathon-line">
-          <span>AITX ’26</span>
-          <i>✳</i>
-          <span>NexHacks ’26</span>
-          <i>✳</i>
-          <span>HackTX ’25</span>
-          <i>✳</i>
-          <span>AITX ’24</span>
-          <i>✳</i>
-          <span>BokoHacks ’24</span>
-        </div>
+        <ul className="hackathon-line">
+          {hackathons.map((h, i) => (
+            <li key={h.name}>
+              {i > 0 && <i aria-hidden="true">✳</i>}
+              <Link href={`/projects/${h.project}`}>{h.name}</Link>
+            </li>
+          ))}
+        </ul>
       </section>
       <section id="resumes" className="section-shell resumes-section">
         <div>
@@ -783,9 +604,6 @@ export default function Home() {
           </form>
         </div>
       </section>
-      {selected && (
-        <ProjectDialog project={selected} onClose={() => setSelected(null)} />
-      )}
     </>
   );
 }

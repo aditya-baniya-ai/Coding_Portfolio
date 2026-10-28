@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import Navbar from "@/components/navbar";
 import "./globals.css";
+import "./showcase.css";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -34,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
       <body className={`${inter.variable} ${space.variable}`}>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Link className="skip-link" href="#main">
