@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowDownToLine,
@@ -255,16 +255,26 @@ export default function Home() {
               ? " selected"
               : ""}
         </p>
-        <div className="project-grid">
-          {visible.map((p, i) => (
-            <ProjectCard
-              key={p.id}
-              project={p}
-              index={i}
-              wide={i === 0 && !query && (filter === "Selected" || filter === "All work")}
-            />
-          ))}
-        </div>
+        <ol className="timeline" aria-label="Projects, newest first">
+          {visible.map((p, i) => {
+            const year = p.date?.slice(0, 4) ?? "Earlier";
+            const newYear = i === 0 || year !== (visible[i - 1].date?.slice(0, 4) ?? "Earlier");
+            return (
+              <Fragment key={p.id}>
+                {newYear && (
+                  <li className="timeline-year" aria-label={year}>
+                    <span>{year}</span>
+                  </li>
+                )}
+                <li className={`timeline-item card-${p.color} ${i % 2 ? "is-right" : "is-left"}`}>
+                  <span className="timeline-node" aria-hidden="true" />
+                  <span className="timeline-when">{p.period ?? p.category}</span>
+                  <ProjectCard project={p} index={i} />
+                </li>
+              </Fragment>
+            );
+          })}
+        </ol>
         {!visible.length && (
           <div className="empty-state">
             <Search size={32} />

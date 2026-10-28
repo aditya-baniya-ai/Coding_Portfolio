@@ -22,6 +22,8 @@ export const biotwin: Project = {
   tags: ["React", "Three.js", "FastAPI", "MATLAB", "Gemini", "ElevenLabs"],
   metric: "1.92 MAE",
   metricLabel: "1-hour forecast vs 2.35 baseline",
+  period: "Sep 2026",
+  date: "2026-09-13",
   context: "HackRice 16 · September 2026",
   github: "https://github.com/HackRice2026/BioTwin",
   devpost: "https://devpost.com/software/biotwin-1jwpxt",
