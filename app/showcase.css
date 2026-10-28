@@ -1308,119 +1308,11 @@ html[data-theme="dark"] body::before {
   }
 }
 
-/* ───────── Chess artwork ───────── */
-.chess-art {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 45%, #ffffff55, transparent 60%),
-    var(--tint);
-}
-.chess-board {
-  position: relative;
-  width: min(62%, 330px);
-  aspect-ratio: 1;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  border-radius: 6px;
-  overflow: hidden;
-  transform: perspective(900px) rotateX(48deg) rotateZ(-24deg);
-  box-shadow:
-    18px 22px 0 -4px #20231f1f,
-    0 0 0 6px #5a3a24;
-  margin-top: 14%;
-}
-.chess-board i {
-  background: #f1d9b5;
-}
-.chess-board i.dark {
-  background: #b58863;
-}
-.chess-piece {
-  position: absolute;
-  font-size: clamp(1.6rem, 4.4vw, 2.6rem);
-  line-height: 1;
-  color: #20231f;
-  text-shadow: 0 2px 0 #ffffff66;
-}
-.p1 { left: 14%; top: 62%; }
-.p2 { left: 62%; top: 12%; }
-.p3 { left: 37%; top: 37%; }
-.p4 { left: 74%; top: 62%; color: #fff; text-shadow: 0 2px 0 #0007; }
-.p5 { left: 12%; top: 12%; color: #fff; text-shadow: 0 2px 0 #0007; }
-.p6 { left: 50%; top: 74%; color: #fff; text-shadow: 0 2px 0 #0007; }
-.chess-arm {
-  position: absolute;
-  top: -10%;
-  left: 52%;
-  width: 16px;
-  height: 56%;
-  border-radius: 8px;
-  background: linear-gradient(90deg, #3a3f38, #7a8274 45%, #2c302a);
-  transform: rotate(9deg);
-  transform-origin: top;
-  animation: arm-sway 5s ease-in-out infinite;
-}
-.chess-arm::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -9px;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: #3a3f38;
-  box-shadow: inset 0 0 0 6px #5b6355;
-}
-.chess-arm::after {
-  content: "";
-  position: absolute;
-  bottom: -16px;
-  left: -8px;
-  width: 32px;
-  height: 20px;
-  border: 5px solid #3a3f38;
-  border-top: 0;
-  border-radius: 0 0 4px 4px;
-  border-bottom-width: 0;
-  background:
-    linear-gradient(#3a3f38, #3a3f38) 0 0 / 100% 6px no-repeat;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 78% 100%, 78% 40%, 22% 40%, 22% 100%, 0 100%);
-}
-@keyframes arm-sway {
-  50% {
-    transform: rotate(-3deg) translateY(12px);
-  }
-}
-.chess-move {
-  position: absolute;
-  left: 22px;
-  top: 22px;
-  font: 500 0.78rem var(--font-space);
-  letter-spacing: 0.06em;
-  color: var(--tint-ink);
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.chess-move span {
-  font: 600 0.55rem var(--font-inter);
-  letter-spacing: 0.12em;
-  padding: 4px 7px;
-  border: 1px solid currentColor;
-  border-radius: 4px;
-}
-
 /* ───────── Motion preferences ───────── */
 @media (prefers-reduced-motion: reduce) {
   .about-intro,
   .about-opening .about-photo,
   .about-opening .about-copy,
-  .chess-arm,
   .latest-dot::after {
     animation: none !important;
   }

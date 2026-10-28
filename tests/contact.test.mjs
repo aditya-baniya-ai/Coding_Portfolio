@@ -20,7 +20,7 @@ const loadTS = async (path) =>
   import(await toDataUrl(new URL(path, import.meta.url)));
 const { buildEmailDraft, contactEmail } = await loadTS("../lib/contact.ts");
 const { awards, hackathons } = await loadTS("../lib/portfolio.ts");
-const { projects } = await loadTS("../lib/projects.ts");
+const { projects, orderedMedia } = await loadTS("../lib/projects.ts");
 
 test("email draft preserves message text and keeps special characters within its fields", () => {
   const draft = {
@@ -76,7 +76,7 @@ test("every project has unique identity and a complete case study", () => {
 });
 test("project media is well formed and local files exist", () => {
   const withMedia = projects.filter((p) => p.media?.length);
-  assert.ok(withMedia.length >= 4, "the photo-and-video showcase projects have media");
+  assert.ok(withMedia.length >= 6, "the showcase projects have media");
   for (const project of withMedia) {
     for (const m of project.media) {
       if (m.type === "youtube") assert.match(m.id, /^[\w-]{11}$/);
@@ -90,6 +90,13 @@ test("project media is well formed and local files exist", () => {
           `${src} is missing from public/`,
         );
     }
+  }
+});
+test("a project never opens on a video: its cover is an image", () => {
+  for (const project of projects.filter((p) => p.media?.length)) {
+    const [first, ...rest] = orderedMedia(project);
+    assert.equal(first.type, "image", `${project.id} must open on an image`);
+    assert.equal(rest.length + 1, project.media.length, "nothing is dropped");
   }
 });
 test("hackathon strip links to real projects", () => {

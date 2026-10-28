@@ -33,6 +33,12 @@ export const robo: Project = {
   ],
   media: [
     {
+      type: "image",
+      src: `${base}/cover.jpg`,
+      alt: "Robo’s black robot arm beside a monitor showing the Chocolate Catcher game, with a basket and a box of chocolates on the table",
+      caption: "Robo and the Chocolate Catcher game at the Makerspace",
+    },
+    {
       type: "video",
       src: `${base}/chocolate-catcher.mp4`,
       poster: `${base}/chocolate-catcher-poster.jpg`,

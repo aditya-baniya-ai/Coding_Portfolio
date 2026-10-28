@@ -6,7 +6,6 @@ export const autoChess: Project = {
   category: "Robotics",
   featured: true,
   color: "blue",
-  art: "chess",
   eyebrow: "ROBOTICS / GAME AI",
   summary:
     "A chess-playing robot arm, hanging upside down over a real board. A camera watches, Stockfish picks the moves, and the arm moves the pieces.",
@@ -18,6 +17,14 @@ export const autoChess: Project = {
   period: "Oct 2026 · ongoing",
   context: "Ingram Hall Makerspace · Texas State University · October 2026 · In progress",
   github: "https://github.com/PawPrintStudio/Auto-chess",
+  media: [
+    {
+      type: "image",
+      src: "/projects/auto-chess/cover.jpg",
+      alt: "Illustration of a robot arm hanging from a frame, 430 mm above a chessboard, lowering a pawn for the move e2 to e4",
+      caption: "Illustration: the arm hangs 430 mm above the board and plays Stockfish’s moves",
+    },
+  ],
   facts: [
     { label: "Where", value: "Ingram Hall Makerspace, Texas State" },
     { label: "When", value: "October 2026" },

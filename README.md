@@ -34,7 +34,7 @@ The test suite covers email-draft encoding and header boundaries, case-study com
 
 Open `lib/projects.ts` (short projects) or copy one of `lib/case-studies/*.ts` (full case studies) and fill in the fields in `lib/project-types.ts`:
 
-- `media`: put a YouTube video first (`{ type: "youtube", id }`), then images. `devpostImages("Title", ["005/463/686", ...])` builds a Devpost gallery from the path segment in each Devpost image URL. Self-hosted files go in `public/projects/<id>/` and are referenced as `/projects/<id>/file.jpg`; `{ type: "video", src, poster }` plays an MP4 once the visitor presses play.
+- `media`: the first image is the project's cover; list it first. Videos (`{ type: "youtube", id }`) are always shown after the cover, never first. `devpostImages("Title", ["005/463/686", ...])` builds a Devpost gallery from the path segment in each Devpost image URL. Self-hosted files go in `public/projects/<id>/` and are referenced as `/projects/<id>/file.jpg`; `{ type: "video", src, poster }` plays an MP4 once the visitor presses play.
 - `did` / `how`: the two short lines shown on the home-page card. `sections` is the long-form story on the case-study page.
 - Add the new `id` to the `order` list in `lib/projects.ts` to place it; the first featured project is the wide spotlight card.
 

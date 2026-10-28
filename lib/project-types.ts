@@ -32,7 +32,6 @@ export type Project = {
   featured?: boolean;
   color: string;
   image?: string;
-  art?: "chess";
   metric?: string;
   metricLabel?: string;
   context: string;
