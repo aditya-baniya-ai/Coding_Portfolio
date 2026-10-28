@@ -5,7 +5,7 @@ export const autoChess: Project = {
   title: "Auto-chess",
   category: "Robotics",
   featured: true,
-  color: "purple",
+  color: "blue",
   art: "chess",
   eyebrow: "ROBOTICS / GAME AI",
   summary:
@@ -16,7 +16,6 @@ export const autoChess: Project = {
   metric: "4 levels",
   metricLabel: "Beginner to Hard",
   period: "Oct 2026 · ongoing",
-  date: "2026-10-20",
   context: "Ingram Hall Makerspace · Texas State University · October 2026 · In progress",
   github: "https://github.com/PawPrintStudio/Auto-chess",
   facts: [
