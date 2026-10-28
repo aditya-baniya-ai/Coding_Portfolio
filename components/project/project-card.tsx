@@ -4,16 +4,16 @@ import type { Project } from "@/lib/projects";
 import MediaCarousel from "./media-carousel";
 import ProjectArt from "./project-art";
 
-type Props = { project: Project; index: number; wide?: boolean };
+type Props = { project: Project; index: number };
 
-export default function ProjectCard({ project: p, index, wide }: Props) {
+export default function ProjectCard({ project: p, index }: Props) {
   const href = `/projects/${p.id}`;
   const did = p.did ?? p.outcome;
   const how = p.how ?? p.approach?.[0];
   const videos = p.media?.filter((m) => m.type !== "image").length ?? 0;
   const photos = p.media?.filter((m) => m.type === "image").length ?? 0;
   return (
-    <article className={`project-card card-${p.color}${wide ? " project-card-wide" : ""}`}>
+    <article className="project-card">
       <div className="project-frame">
         {p.media?.length ? (
           <div className="project-art-button media-frame">

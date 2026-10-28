@@ -36,6 +36,10 @@ export type Project = {
   metric?: string;
   metricLabel?: string;
   context: string;
+  /** Shown on the timeline marker, e.g. "Oct 2026". Falls back to the category. */
+  period?: string;
+  /** Sort key (ISO, any precision) for the newest-first timeline. Not displayed. */
+  date?: string;
   approach?: string[];
   outcome?: string;
   github?: string;

@@ -28,6 +28,8 @@ const existing: Project[] = [
     tags: ["YOLOv8 + CBAM", "TensorRT", "NVIDIA Orin"],
     metric: "25–30 ms",
     metricLabel: "edge inference",
+    period: "Jan 2025 – Present",
+    date: "2025-01",
     context:
       "January 2025–Present · Ingram School of Engineering, Texas State University",
     approach: [
@@ -53,6 +55,8 @@ const existing: Project[] = [
     tags: ["FastAPI", "Next.js", "FAL + Kling", "FFmpeg"],
     metric: "1st prize",
     metricLabel: "Best Use of FAL API",
+    period: "Mar 2026",
+    date: "2026-03",
     context: "March 2026 · AITX Codex Hackathon",
     approach: [
       "Built three agents for room classification, shot-order planning, and Kling clip generation.",
@@ -76,6 +80,8 @@ const existing: Project[] = [
     tags: ["Python", "Action recognition", "Computer vision"],
     metric: "1–2 hours",
     metricLabel: "down from 3–5 days",
+    period: "Sep 2024 – Present",
+    date: "2024-09",
     context:
       "September 2024–Present · Tech Lead, BobCatalyst Innovation Accelerator Program",
     image: "/most_cv.png",
@@ -101,6 +107,8 @@ const existing: Project[] = [
       "A Raspberry Pi surveillance robot with autonomous navigation, live video, and two-way voice.",
     tags: ["LiveKit", "WebRTC", "OpenCV", "Next.js"],
     image: "/ai_smart.png",
+    period: "Jan 2026",
+    date: "2026-01",
     context: "January 2026 · NexHacks at Carnegie Mellon University",
     approach: [
       "Built a LiveKit-powered Raspberry Pi robot and a Next.js operator console for real-time home surveillance over WebRTC.",
@@ -122,6 +130,8 @@ const existing: Project[] = [
     summary:
       "An AI audio news companion that finds headlines, summarizes them, and turns them into narration.",
     tags: ["n8n", "Gemini", "ElevenLabs", "Next.js"],
+    period: "2025",
+    date: "2025-10",
     context: "HackTX 2025",
     approach: [
       "Automated news retrieval and summarization through an n8n pipeline.",
@@ -181,6 +191,8 @@ const existing: Project[] = [
     summary:
       "A platform connecting Hindus abroad with priests for ceremonies and religious guidance.",
     tags: ["Flask", "Next.js", "LLaMA API", "Docker"],
+    period: "2024",
+    date: "2024-04",
     context: "AITX Hackathon · 2024",
     approach: [
       "Built a full-stack ceremonial booking platform with secure role-based access.",
@@ -202,6 +214,8 @@ const existing: Project[] = [
     summary:
       "An interactive spam classifier with machine learning and conversational analysis.",
     tags: ["Flask", "React", "Scikit-learn", "OpenAI API"],
+    period: "2024",
+    date: "2024-03",
     context: "BokoHacks · 2024",
     approach: [
       "Cleaned training data with Pandas and NLTK, then trained a Scikit-learn classifier.",
@@ -250,28 +264,18 @@ const existing: Project[] = [
   },
 ];
 
-/**
- * Display order: newest builds first, then earlier work. The first `featured`
- * project is shown as the wide spotlight card.
- */
-const order = [
-  "ingather",
-  "sentinel",
-  "mytwin",
-  "biotwin",
-  "robo",
-  "auto-chess",
-  "reelstudio",
-  "mostify",
-  "robot",
-];
-
 const all: Project[] = [ingather, mytwin, biotwin, robo, autoChess, ...existing];
 
-export const projects: Project[] = [
-  ...order.map((id) => all.find((p) => p.id === id)!),
-  ...all.filter((p) => !order.includes(p.id)),
-];
+/** Newest first by `date`; projects without a date follow, in listed order. */
+export const projects: Project[] = all
+  .map((p, i) => ({ p, i }))
+  .sort((a, b) => {
+    if (a.p.date && b.p.date) return b.p.date.localeCompare(a.p.date);
+    if (a.p.date) return -1;
+    if (b.p.date) return 1;
+    return a.i - b.i;
+  })
+  .map(({ p }) => p);
 
 export const getProject = (id: string) => projects.find((p) => p.id === id);
 

@@ -16,6 +16,8 @@ export const robo: Project = {
   tags: ["ROS 2", "Jetson Orin NX", "YOLO-World", "Whisper", "Ollama", "MediaPipe"],
   metric: "15.8 → 6.6 s",
   metricLabel: "time to first words",
+  period: "Makerspace · 2026",
+  date: "2026-09-20",
   context: "Ingram Hall Makerspace · Texas State University · 2026",
   github: "https://github.com/PawPrintStudio/Open_manipulator_x",
   facts: [

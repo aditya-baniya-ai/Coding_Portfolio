@@ -15,6 +15,8 @@ export const ingather: Project = {
   tags: ["React + Vite", "FastAPI", "Gradient-boosted trees", "Muse Spark", "PostgreSQL"],
   metric: "72%",
   metricLabel: "top-5 match precision",
+  period: "Oct 2026",
+  date: "2026-10-25",
   context: "HackTX 2026 · Meta track · October 2026",
   github: "https://github.com/aditya-baniya-ai/InGather",
   devpost: "https://devpost.com/software/ingather",

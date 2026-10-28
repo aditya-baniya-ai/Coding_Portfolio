@@ -15,6 +15,8 @@ export const mytwin: Project = {
   tags: ["Swift", "SwiftUI", "RealityKit", "HealthKit", "Gemini Live"],
   metric: "90",
   metricLabel: "passing unit tests",
+  period: "Oct 2026",
+  date: "2026-10-01",
   context: "RevenueCat Shipaton 2026 · October 2026 · Solo build",
   github: "https://github.com/aditya-baniya-ai/myTwin",
   devpost: "https://devpost.com/software/mytwin",
